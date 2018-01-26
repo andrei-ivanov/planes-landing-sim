@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.test.sim.model.LandingType;
-import com.test.sim.model.Plane;
+import com.test.sim.model.PlaneDetails;
 import com.test.sim.model.PlaneType;
 
 public class Config {
@@ -26,11 +26,11 @@ public class Config {
 		this.location = location;
 	}
 
-	static List<Plane> readData(String location) throws IOException {
+	static List<PlaneDetails> readData(String location) throws IOException {
 		return new Config(location).loadData();
 	}
 
-	List<Plane> loadData() throws IOException {
+	List<PlaneDetails> loadData() throws IOException {
 		if (location == null) {
 			System.out.println("Loading default config from " + DEFAULT_CONFIG);
 			return readConfig(Simulator.class.getResourceAsStream(DEFAULT_CONFIG));
@@ -46,17 +46,17 @@ public class Config {
 		}
 	}
 
-	List<Plane> readConfig(URL url) throws IOException {
+	List<PlaneDetails> readConfig(URL url) throws IOException {
 		System.out.println("Loading config from " + url);
 		return readConfig(url.openStream());
 	}
 
-	List<Plane> readConfig(Path path) throws IOException {
+	List<PlaneDetails> readConfig(Path path) throws IOException {
 		System.out.println("Loading config from " + path);
 		return readConfig(Files.newInputStream(path));
 	}
 
-	List<Plane> readConfig(InputStream is) throws IOException {
+	List<PlaneDetails> readConfig(InputStream is) throws IOException {
 		if (is == null) {
 			throw new IllegalArgumentException("The input stream cannot be null.");
 		}
@@ -66,13 +66,13 @@ public class Config {
 		}
 	}
 
-	Plane parseLine(String line) {
+	PlaneDetails parseLine(String line) {
 		String[] pieces = line.split(", ");
 		String name = pieces[0];
 		PlaneType planeType = PlaneType.valueOf(pieces[1]);
 		LandingType landingType = LandingType.valueOf(pieces[2]);
 		int controllerDialogInitDelay = Integer.parseInt(pieces[3]);
 
-		return new Plane(name, planeType, landingType, controllerDialogInitDelay);
+		return new PlaneDetails(name, planeType, landingType, controllerDialogInitDelay);
 	}
 }

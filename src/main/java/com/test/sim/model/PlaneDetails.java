@@ -1,6 +1,6 @@
 package com.test.sim.model;
 
-public class Plane {
+public class PlaneDetails {
 	private final String name;
 
 	private final PlaneType type;
@@ -9,7 +9,7 @@ public class Plane {
 
 	private final int controllerDialogInitDelay;
 
-	public Plane(String name, PlaneType type, LandingType landingType, int controllerDialogInitDelay) {
+	public PlaneDetails(String name, PlaneType type, LandingType landingType, int controllerDialogInitDelay) {
 		this.name = name;
 		this.type = type;
 		this.landingType = landingType;
@@ -52,10 +52,10 @@ public class Plane {
 		if (this == obj) {
 			return true;
 		}
-		if (!(obj instanceof Plane)) {
+		if (!(obj instanceof PlaneDetails)) {
 			return false;
 		}
-		Plane other = (Plane) obj;
+		PlaneDetails other = (PlaneDetails) obj;
 		if (controllerDialogInitDelay != other.controllerDialogInitDelay) {
 			return false;
 		}
