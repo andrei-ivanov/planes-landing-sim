@@ -7,9 +7,9 @@ public class PlaneDetails {
 
 	private final LandingType landingType;
 
-	private final int controllerDialogInitDelay;
+	private final long controllerDialogInitDelay;
 
-	public PlaneDetails(String name, PlaneType type, LandingType landingType, int controllerDialogInitDelay) {
+	public PlaneDetails(String name, PlaneType type, LandingType landingType, long controllerDialogInitDelay) {
 		this.name = name;
 		this.type = type;
 		this.landingType = landingType;
@@ -24,7 +24,6 @@ public class PlaneDetails {
 		return type;
 	}
 
-
 	public LandingType getLandingType() {
 		return landingType;
 	}
@@ -32,7 +31,7 @@ public class PlaneDetails {
 	/**
 	 * After how many seconds it should initiate the dialog with a traffic controller (as not all the planes are ready to land in the same time)
 	 */
-	public int getControllerDialogInitDelay() {
+	public long getControllerDialogInitDelay() {
 		return controllerDialogInitDelay;
 	}
 
@@ -40,10 +39,10 @@ public class PlaneDetails {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + controllerDialogInitDelay;
-		result = prime * result + (landingType == null ? 0 : landingType.hashCode());
-		result = prime * result + (name == null ? 0 : name.hashCode());
-		result = prime * result + (type == null ? 0 : type.hashCode());
+		result = prime * result + (int) (controllerDialogInitDelay ^ (controllerDialogInitDelay >>> 32));
+		result = prime * result + ((landingType == null) ? 0 : landingType.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -51,6 +50,9 @@ public class PlaneDetails {
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
+		}
+		if (obj == null) {
+			return false;
 		}
 		if (!(obj instanceof PlaneDetails)) {
 			return false;

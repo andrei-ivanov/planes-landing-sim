@@ -13,11 +13,16 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.test.sim.model.LandingType;
 import com.test.sim.model.PlaneDetails;
 import com.test.sim.model.PlaneType;
 
 public class Config {
+	private static final Logger LOGGER = LogManager.getLogger(Config.class);
+
 	private static final String DEFAULT_CONFIG = "/planes.txt";
 
 	private final String location;
@@ -32,7 +37,7 @@ public class Config {
 
 	List<PlaneDetails> loadData() throws IOException {
 		if (location == null) {
-			System.out.println("Loading default config from " + DEFAULT_CONFIG);
+			LOGGER.info("Loading default config from {}", DEFAULT_CONFIG);
 			return readConfig(Simulator.class.getResourceAsStream(DEFAULT_CONFIG));
 		}
 
@@ -47,12 +52,12 @@ public class Config {
 	}
 
 	List<PlaneDetails> readConfig(URL url) throws IOException {
-		System.out.println("Loading config from " + url);
+		LOGGER.info("Loading config from {}", url);
 		return readConfig(url.openStream());
 	}
 
 	List<PlaneDetails> readConfig(Path path) throws IOException {
-		System.out.println("Loading config from " + path);
+		LOGGER.info("Loading config from {}", path);
 		return readConfig(Files.newInputStream(path));
 	}
 
@@ -71,7 +76,7 @@ public class Config {
 		String name = pieces[0];
 		PlaneType planeType = PlaneType.valueOf(pieces[1]);
 		LandingType landingType = LandingType.valueOf(pieces[2]);
-		int controllerDialogInitDelay = Integer.parseInt(pieces[3]);
+		long controllerDialogInitDelay = Long.parseLong(pieces[3]);
 
 		return new PlaneDetails(name, planeType, landingType, controllerDialogInitDelay);
 	}
